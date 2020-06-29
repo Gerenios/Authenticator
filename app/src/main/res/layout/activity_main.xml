@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context="com.gerenios.aadinternals.authenticator.MainActivity">
 
+
+    <EditText
+        android:id="@+id/token_title"
+        android:layout_width="0dp"
+        android:layout_height="244dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="Press"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

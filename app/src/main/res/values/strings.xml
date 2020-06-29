@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AADInternals Authenticator</string>
-    <string name="copy_token">Copy token to clipboard</string>
     <string name="channel_name">AADInternals</string>
     <string name="channel_description">AADInternals Authenticator events</string>
     <string name="channel_id">1773</string>

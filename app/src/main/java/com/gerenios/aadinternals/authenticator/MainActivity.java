@@ -8,9 +8,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,25 +38,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-        createNotificationChannel();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.copy_token:
+        // Set the token to the text box
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 copyToken();
-                return true;
-        }
-        return true;
+            }
+        }, 200);
+
+        createNotificationChannel();
     }
 
     // Copies the token to clipboard
@@ -64,10 +58,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = context.getSharedPreferences("AADINTERNALS",Context.MODE_PRIVATE);
         String token = pref.getString("token","");
 
+        EditText editText = (EditText)findViewById(R.id.token_title);
+        editText.setText(token);
         // Copy to clipboard
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = android.content.ClipData.newPlainText("Authenticator token",token);
-        clipboard.setPrimaryClip(clip);
+        //ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        //ClipData clip = android.content.ClipData.newPlainText("Authenticator token",token);
+        //clipboard.setPrimaryClip(clip);
+
 
         // Log'n Toast
         //Log.d(TAG, "Token copied to clipboard");
