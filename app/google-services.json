@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "91905377563",
+    "firebase_url": "https://microsoftauthenticator.firebaseio.com",
+    "project_id": "microsoftauthenticator",
+    "storage_bucket": "microsoftauthenticator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91905377563:android:b45aadcaa9572c8d",
+        "android_client_info": {
+          "package_name": "com.gerenios.aadinternals.authenticator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91905377563-dijqtpc29004iduck3d1623cgk8vnneg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQiqY4cX3UacZZhMN3CIu1gUE2XywMQug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91905377563-dijqtpc29004iduck3d1623cgk8vnneg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

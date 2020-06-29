@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "336805340521",
+    "firebase_url": "https://aadinternals-authenticator.firebaseio.com",
+    "project_id": "aadinternals-authenticator",
+    "storage_bucket": "aadinternals-authenticator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336805340521:android:7ae9a4cc0192de4cab49f8",
+        "android_client_info": {
+          "package_name": "com.gerenios.aadinternals.authenticator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336805340521-rl597v0239le05mfgu5qf3uspouq6d5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4M8jlXIh9qsIQtkYEUpphQJKFRGcK2SI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336805340521-rl597v0239le05mfgu5qf3uspouq6d5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
