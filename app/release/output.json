@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.gerenios.aadinternals.authenticator",
+  "applicationId": "com.azure.authenticator",
   "variantName": "release",
   "elements": [
     {

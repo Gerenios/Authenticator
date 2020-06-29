@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:91905377563:android:b45aadcaa9572c8d",
         "android_client_info": {
-          "package_name": "com.gerenios.aadinternals.authenticator"
+          "package_name": "com.azure.authenticator"
         }
       },
       "oauth_client": [

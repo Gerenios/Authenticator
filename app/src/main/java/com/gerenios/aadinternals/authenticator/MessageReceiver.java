@@ -3,8 +3,6 @@ package com.gerenios.aadinternals.authenticator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -19,6 +17,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import javax.net.ssl.HttpsURLConnection;
+import com.azure.authenticator.R;
 
 
 public class MessageReceiver extends FirebaseMessagingService {
@@ -159,14 +158,14 @@ public class MessageReceiver extends FirebaseMessagingService {
     }
     @Override
     public void onNewToken(String token) {
+        super.onNewToken(token);
+
         // Get the new token with correct senders
         Context context = getApplicationContext();
         getToken(context);
 
         // Log'n Toast
         //Log.d(TAG, "Token changed!");
-
-        Toast.makeText(context, "Token changed!", Toast.LENGTH_SHORT).show();
 
     }
 
