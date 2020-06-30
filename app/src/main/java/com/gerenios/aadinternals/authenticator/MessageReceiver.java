@@ -48,19 +48,16 @@ public class MessageReceiver extends FirebaseMessagingService {
             bundle.putString((String) next.getKey(), (String) next.getValue());
         }
 
+        // Sleep for a while..
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Accept the authentication request
         boolean success = acceptAuthRequest(bundle);
         final String message = String.format("Request ID: %s Success:%b",bundle.getString("guid"),success);
-
-        // Toast
-        /*Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-            }
-        });
-        */
 
         // Initialize notification builder and manager
         if(this.builder == null) {

@@ -2,18 +2,13 @@ package com.gerenios.aadinternals.authenticator;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Get the token
+        // Get the token, a.k.a. register the app
         new Thread( new Runnable() {
             @Override
             public void run() {
@@ -38,18 +33,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-        // Set the token to the text box
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                copyToken();
-            }
-        }, 200);
-
+        // Create the notifcation channel
         createNotificationChannel();
     }
 
+    public void copyToken(View view) {
+        copyToken();
+    }
     // Copies the token to clipboard
     public void copyToken() {
 
@@ -60,15 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editText = (EditText)findViewById(R.id.token_title);
         editText.setText(token);
-        // Copy to clipboard
-        //ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        //ClipData clip = android.content.ClipData.newPlainText("Authenticator token",token);
-        //clipboard.setPrimaryClip(clip);
-
 
         // Log'n Toast
         //Log.d(TAG, "Token copied to clipboard");
-        Toast.makeText(MainActivity.this, "Token copied to clipboard", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Token copied to clipboard", Toast.LENGTH_SHORT).show();
 
     }
 
