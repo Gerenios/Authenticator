@@ -1,5 +1,6 @@
 # Disclaimer
 Functionality provided through this app are not supported by Microsoft and thus should not be used in a production environment. Use on your own risk!
+**NOTE:** This app **CAN NOT** be installed to device with **Microsoft Authenticator**.
 
 # AADInternals Authenticator (Android App)
 This is POC of a replacement authenticator for Microsoft Authenticator. This authenticator accepts all MFA authenticator challenges automatically.
