@@ -23,10 +23,9 @@ import com.azure.authenticator.R;
 public class MessageReceiver extends FirebaseMessagingService {
 
     private static final String TAG = "AADInt Authenticator";
-    private NotificationCompat.Builder builder;
     private NotificationManagerCompat notificationManager;
 
-    /**
+     /**
      * Called when message is received.
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
@@ -48,29 +47,40 @@ public class MessageReceiver extends FirebaseMessagingService {
             bundle.putString((String) next.getKey(), (String) next.getValue());
         }
 
-        // Sleep for a while..
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Accept the authentication request
-        boolean success = acceptAuthRequest(bundle);
-        final String message = String.format("Request ID: %s Success:%b",bundle.getString("guid"),success);
-
-        // Initialize notification builder and manager
-        if(this.builder == null) {
-            this.builder = new NotificationCompat.Builder(this, getString(R.string.channel_id))
-                    .setSmallIcon(R.drawable.ic_stat_name)
-                    .setContentTitle(message)
-                    .setContentText(String.format("User Object Id (SHA256): %s", bundle.getString("userObjectId")))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
+        // Initialize notification and manager
+        if (this.notificationManager == null) {
             this.notificationManager = NotificationManagerCompat.from(getApplicationContext());
         }
-        // Show the notification
-        notificationManager.notify(new Random().nextInt(9999999), builder.build());
+
+        String title="";
+        String message="";
+        // Check the message type. If validate don't do anything
+        if(bundle.getString("type").equals("validate")) {
+            // Send the validation response
+            boolean success = sendValidationResponse(bundle);
+            title = String.format("Activation ID: %s Success: %b", bundle.getString("guid"), success);
+            message = title;
+        }
+        else if(bundle.getString("type").equals("auth")){
+            // Accept the authentication request
+            boolean success = acceptAuthRequest(bundle);
+            title = String.format("Request ID: %s Success: %b", bundle.getString("guid"), success);
+            message = String.format("User Object Id (SHA256): %s", bundle.getString("userObjectId"));
+        }
+        else {
+            // Other message types not implemented.
+        }
+
+        if(!title.equals("")) {
+            // Show the notification
+            NotificationCompat.Builder builder;
+            builder = new NotificationCompat.Builder(this, getString(R.string.channel_id))
+                    .setSmallIcon(R.drawable.ic_stat_name)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            notificationManager.notify(new Random().nextInt(9999999), builder.build());
+        }
     }
 
     /**
@@ -129,6 +139,62 @@ public class MessageReceiver extends FirebaseMessagingService {
         // Check the response and return
         return response.contains("<authenticationResultResult>1<");
     }
+
+    /**
+     * Sends an accept message
+     * @param authInfo
+     */
+    private boolean sendValidationResponse(Bundle authInfo)
+    {
+        // Get the token from the preferences
+        Context context = getApplicationContext();
+        SharedPreferences pref = context.getSharedPreferences("AADINTERNALS",Context.MODE_PRIVATE);
+        String token = pref.getString("token","");
+
+        // Get the required info from the message
+        String url = String.format("https://%s",authInfo.getString("url"));
+        url+="/pad";
+        String guid = authInfo.getString("guid");
+        // Generate request id
+        String requestId = UUID.randomUUID().toString();
+
+        // Generate the body
+        String body = String.format("<pfpMessage version=\"1.6\"><header><source><component type=\"pfsvc\" role=\"master\"><host ip=\"\" hostname=\"\" serverId=\"\"/></component></source></header><request request-id=\"%s\" async=\"0\" response-url=\"\" language=\"en\"><phoneAppValidateDeviceTokenRequest><phoneAppContext><guid>%s</guid><oathCode/><deviceToken>%s</deviceToken><version>6.2001.0140</version><osVersion>8.1.0</osVersion><needDosPreventer>yes</needDosPreventer></phoneAppContext><validationResult>yes</validationResult><accounts/></phoneAppValidateDeviceTokenRequest></request></pfpMessage>", requestId, guid, token);
+
+        String response=null;
+        // Send the acceptance message
+        try {
+            URL responseUrl = new URL(url);
+            HttpsURLConnection connection = (HttpsURLConnection) responseUrl.openConnection();
+            try
+            {
+                // Send the request
+                connection.setDoOutput(true);
+                OutputStream out=new BufferedOutputStream(connection.getOutputStream());
+                out.write(body.getBytes());
+                out.flush();
+
+                // Read the response
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuffer sb = new StringBuffer();
+                String line;
+                while((line = in.readLine()) != null)
+                {
+                    sb.append(line);
+                }
+                response = sb.toString();
+
+            } catch (Exception e) {}
+            finally {
+                connection.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Check the response and return
+        return response.contains("\"success\"");
+    }
     /**
      * Get's the token, aka initialises the app
      * @param context
@@ -161,9 +227,7 @@ public class MessageReceiver extends FirebaseMessagingService {
         Context context = getApplicationContext();
         getToken(context);
 
-        // Log'n Toast
         //Log.d(TAG, "Token changed!");
-
     }
 
 }

@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.azure.authenticator.R;
@@ -51,10 +49,7 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText)findViewById(R.id.token_title);
         editText.setText(token);
 
-        // Log'n Toast
-        //Log.d(TAG, "Token copied to clipboard");
-        //Toast.makeText(MainActivity.this, "Token copied to clipboard", Toast.LENGTH_SHORT).show();
-
+        //Log.d(TAG, "Token copied to text box");
     }
 
     private void createNotificationChannel() {
