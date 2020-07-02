@@ -10,8 +10,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
-        versionName "6.2001.0140"
-
+        versionName "0.4.0"
+        setProperty("archivesBaseName", "AADInternalsAuthenticator-$versionName")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
